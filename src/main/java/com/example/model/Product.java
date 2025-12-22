@@ -1,29 +1,25 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
-@Entity
-@Table(name = "products", uniqueConstraints = @UniqueConstraint(columnNames = "sku"))
 public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String sku;
     private String name;
     private String category;
-    private BigDecimal price;
-    private Boolean active = true;
+    private double price;
+    private boolean active;
 
-    private Timestamp createdAt;
-
-    @PrePersist
-    public void onCreate() {
-        createdAt = new Timestamp(System.currentTimeMillis());
+    public String getName() {
+        return name;
     }
 
-    // getters & setters
+    public String getCategory() {
+        return category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
