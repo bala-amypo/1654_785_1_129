@@ -1,46 +1,22 @@
 package com.example.demo.service;
 
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.Product;
+import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.model.Product;
 
-import java.util.List;
-
+@Service
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
-    public Product createProduct(Product product) {
-        if (productRepository.findBySku(product.getSku()).isPresent()) {
-            throw new IllegalArgumentException("SKU already exists");
-        }
-        return productRepository.save(product);
-    }
-
-    public Product updateProduct(Long id, Product product) {
-        Product existing = getProductById(id);
-        existing.setName(product.getName());
-        existing.setCategory(product.getCategory());
-        existing.setPrice(product.getPrice());
+    public Product updateProduct(Long id, Product p) {
+        Product existing = productRepository.findById(id).orElseThrow();
+        existing.setName(p.getName());
+        existing.setCategory(p.getCategory());
+        existing.setPrice(p.getPrice());
+        existing.setActive(true);
         return productRepository.save(existing);
-    }
-
-    public Product getProductById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
-    }
-
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    public void deactivateProduct(Long id) {
-        Product p = getProductById(id);
-        p.setActive(false);
-        productRepository.save(p);
     }
 }
