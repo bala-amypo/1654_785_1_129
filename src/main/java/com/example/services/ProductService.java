@@ -1,22 +1,24 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-import com.example.demo.repository.ProductRepository;
+import java.util.List;
 import com.example.demo.model.Product;
+import com.example.demo.repository.ProductRepository;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductRepository repo;
 
-    public Product updateProduct(Long id, Product p) {
-        Product existing = productRepository.findById(id).orElseThrow();
-        existing.setName(p.getName());
-        existing.setCategory(p.getCategory());
-        existing.setPrice(p.getPrice());
-        existing.setActive(true);
-        return productRepository.save(existing);
+    public ProductService(ProductRepository repo) {
+        this.repo = repo;
+    }
+
+    public Product createProduct(Product p) {
+        return repo.save(p);
+    }
+
+    public List<Product> getAllProducts() {
+        return repo.findAll();
     }
 }

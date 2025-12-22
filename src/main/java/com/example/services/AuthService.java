@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import com.example.demo.dto.*;
 
 @Service
-@RequiredArgsConstructor
 public class AuthService {
 
     public AuthResponse login(AuthRequest req) {

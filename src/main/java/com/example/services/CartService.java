@@ -1,19 +1,21 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-import com.example.demo.repository.CartRepository;
 import com.example.demo.model.Cart;
+import com.example.demo.repository.CartRepository;
 
 @Service
-@RequiredArgsConstructor
 public class CartService {
 
-    private final CartRepository cartRepository;
+    private final CartRepository repo;
 
-    public Cart createCart(Long userId) {
+    public CartService(CartRepository repo) {
+        this.repo = repo;
+    }
+
+    public Cart getCartByUserId(Long userId) {
         Cart cart = new Cart();
         cart.setUserId(userId);
-        return cartRepository.save(cart);
+        return repo.save(cart);
     }
 }
