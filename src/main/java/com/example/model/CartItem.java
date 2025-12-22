@@ -1,23 +1,19 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class CartItem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private Product product;
-    private Integer quantity;
 
-    public Product getProduct() {
-        return product;
-    }
+    private int quantity;
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+    public Product getProduct() { return product; }
+    public int getQuantity() { return quantity; }
 }

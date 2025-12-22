@@ -1,34 +1,24 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
 import java.util.List;
 
+@Entity
 public class BundleRule {
 
-    private List<Long> requiredProductIds;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private double discountPercentage;
     private boolean active;
 
-    public List<Long> getRequiredProductIds() {
-        return requiredProductIds;
-    }
+    @ElementCollection
+    private List<Long> requiredProductIds;
 
-    public double getDiscountPercentage() {
-        return discountPercentage;
-    }
+    public double getDiscountPercentage() { return discountPercentage; }
+    public boolean isActive() { return active; }
+    public List<Long> getRequiredProductIds() { return requiredProductIds; }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setRequiredProductIds(List<Long> ids) {
-        this.requiredProductIds = ids;
-    }
-
-    public void setDiscountPercentage(double discountPercentage) {
-        this.discountPercentage = discountPercentage;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public void setActive(boolean active) { this.active = active; }
 }

@@ -1,10 +1,8 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
-@Table(name = "carts")
 public class Cart {
 
     @Id
@@ -13,19 +11,7 @@ public class Cart {
 
     private Long userId;
 
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-
-    @PrePersist
-    public void onCreate() {
-        createdAt = new Timestamp(System.currentTimeMillis());
-        updatedAt = createdAt;
-    }
-
-    @PreUpdate
-    public void onUpdate() {
-        updatedAt = new Timestamp(System.currentTimeMillis());
-    }
-
-    // getters & setters
+    public Long getId() { return id; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 }
