@@ -1,7 +1,8 @@
-package com.example.demo.repositories;
+package com.example.demo.services;
 
-import com.example.demo.model.CartItem;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
-public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+@Service
+public class CartItemService {
+    // business logic here
 }

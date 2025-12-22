@@ -1,7 +1,8 @@
-package com.example.demo.repository;
+package com.example.demo.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.CartItem;
 
-public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+public interface CartItemRepository
+        extends JpaRepository<CartItem, Long> {
 }

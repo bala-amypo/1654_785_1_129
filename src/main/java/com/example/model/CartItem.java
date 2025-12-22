@@ -9,11 +9,5 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Product product;
-
     private int quantity;
-
-    public Product getProduct() { return product; }
-    public int getQuantity() { return quantity; }
 }
