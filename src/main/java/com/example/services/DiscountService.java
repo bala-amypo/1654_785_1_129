@@ -1,21 +1,22 @@
 package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import java.math.BigDecimal;
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.DiscountApplication;
+import com.example.demo.repository.DiscountApplicationRepository;
 
 @Service
-@RequiredArgsConstructor
 public class DiscountService {
 
-    private final DiscountApplicationRepository discountRepo;
+    private final DiscountApplicationRepository repo;
 
-    public void applyDiscount(BundleRule rule) {
+    public DiscountService(DiscountApplicationRepository repo) {
+        this.repo = repo;
+    }
+
+    public void saveDiscount(BigDecimal amount) {
         DiscountApplication da = new DiscountApplication();
-        da.setBundleRule(rule);
-        da.setDiscountAmount(BigDecimal.valueOf(rule.getDiscountPercentage()));
-        discountRepo.save(da);
+        da.setDiscountAmount(amount);
+        repo.save(da);
     }
 }
