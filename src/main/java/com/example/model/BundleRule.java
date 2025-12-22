@@ -1,23 +1,34 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import java.util.List;
 
-@Entity
-@Table(name = "bundle_rules", uniqueConstraints = @UniqueConstraint(columnNames = "ruleName"))
 public class BundleRule {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private List<Long> requiredProductIds;
+    private double discountPercentage;
+    private boolean active;
 
-    private String ruleName;
+    public List<Long> getRequiredProductIds() {
+        return requiredProductIds;
+    }
 
-    @Column(length = 500)
-    private String requiredProductIds; // CSV
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
 
-    private Double discountPercentage;
+    public boolean isActive() {
+        return active;
+    }
 
-    private Boolean active = true;
+    public void setRequiredProductIds(List<Long> ids) {
+        this.requiredProductIds = ids;
+    }
 
-    // getters & setters
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

@@ -1,25 +1,17 @@
 package com.example.demo.model;
 
 public class Product {
+
     private Long id;
+    private String sku;
     private String name;
     private String category;
     private double price;
-    private boolean active;
 
-    public String getName() {
-        return name;
-    }
+    public Long getId() { return id; }
+    public String getSku() { return sku; }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public void setName(String name) { this.name = name; }
+    public void setCategory(String category) { this.category = category; }
+    public void setPrice(double price) { this.price = price; }
 }
