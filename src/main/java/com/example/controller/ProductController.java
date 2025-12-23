@@ -1,9 +1,10 @@
-package com.example.demo.controller;
+package com.example.demo.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
@@ -16,8 +17,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product create(@RequestBody Product p) {
-        return service.createProduct(p);
+    public Product create(@RequestBody Product product) {
+        return service.createProduct(product);
     }
 
     @GetMapping
