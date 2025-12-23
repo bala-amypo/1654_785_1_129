@@ -7,5 +7,7 @@ public class AuthResponse {
         this.token = token;
     }
 
-    public String getToken() { return token; }
+    public String getToken() {
+        return token;
+    }
 }

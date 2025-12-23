@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    public AuthResponse register(RegisterRequest req) {
+    public AuthResponse register(RegisterRequest request) {
         return new AuthResponse("registered");
     }
 
-    public AuthResponse login(AuthRequest req) {
+    public AuthResponse login(AuthRequest request) {
         return new AuthResponse("token");
     }
 }
