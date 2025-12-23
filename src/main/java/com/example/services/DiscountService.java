@@ -1,22 +1,22 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
-import com.example.demo.model.DiscountApplication;
 import com.example.demo.repository.DiscountApplicationRepository;
+import com.example.demo.model.DiscountApplication;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 public class DiscountService {
 
-    private final DiscountApplicationRepository repo;
+    private final DiscountApplicationRepository repository;
 
-    public DiscountService(DiscountApplicationRepository repo) {
-        this.repo = repo;
+    public DiscountService(DiscountApplicationRepository repository) {
+        this.repository = repository;
     }
 
-    public void saveDiscount(BigDecimal amount) {
-        DiscountApplication da = new DiscountApplication();
+    public void applyDiscount(DiscountApplication da, BigDecimal amount) {
         da.setDiscountAmount(amount);
-        repo.save(da);
+        repository.save(da);
     }
 }
