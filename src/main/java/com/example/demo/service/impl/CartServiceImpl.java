@@ -7,7 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 public class CartServiceImpl implements CartService {
     @Autowired
-    private CartRepository cartRepository;
+    CartRepository cartRepository;
 
     public Cart createCart(Long userId) {
         Cart cart = new Cart();
