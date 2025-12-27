@@ -2,7 +2,9 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.BundleRule;
 import com.example.demo.repository.BundleRuleRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BundleRuleServiceImpl {
 
     private final BundleRuleRepository repo;

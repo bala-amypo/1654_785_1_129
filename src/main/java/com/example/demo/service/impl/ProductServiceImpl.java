@@ -5,7 +5,7 @@ import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.math.BigDecimal;
-
+@Service
 public class ProductServiceImpl {
 
     private final ProductRepository repo;

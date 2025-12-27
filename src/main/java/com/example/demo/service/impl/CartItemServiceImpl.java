@@ -2,7 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
-
+@Service
 public class CartItemServiceImpl {
 
     private final CartRepository cartRepo;

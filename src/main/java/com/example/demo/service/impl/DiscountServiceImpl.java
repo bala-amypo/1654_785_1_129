@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Service
 public class DiscountServiceImpl {
 
     private final CartRepository cartRepo;
