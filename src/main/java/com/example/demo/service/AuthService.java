@@ -1,18 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.RegisterRequest;
-import org.springframework.stereotype.Service;
+import com.example.demo.dto.AuthResponse;
 
-@Service
-public class AuthService {
+public interface AuthService {
 
-    public AuthResponse register(RegisterRequest request) {
-        return new AuthResponse("registered");
-    }
+    AuthResponse register(RegisterRequest request);
 
-    public AuthResponse login(AuthRequest request) {
-        return new AuthResponse("token");
-    }
+    AuthResponse login(AuthRequest request);
 }
