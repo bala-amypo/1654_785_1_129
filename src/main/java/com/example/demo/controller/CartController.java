@@ -1,21 +1,25 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.Cart;
 import com.example.demo.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/carts")
 public class CartController {
 
-    private final CartService service;
+    @Autowired
+    private CartService cartService;
 
-    public CartController(CartService service) {
-        this.service = service;
+    @PostMapping
+    public ResponseEntity<Cart> createCart(@RequestParam Long userId) {
+        return ResponseEntity.ok(cartService.createCart(userId));
     }
 
-    @GetMapping("/{userId}")
-    public Cart getCart(@PathVariable Long userId) {
-        return service.getCartByUserId(userId);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Cart> getActiveCart(@PathVariable Long userId) {
+        return ResponseEntity.ok(cartService.getActiveCartForUser(userId));
     }
 }
