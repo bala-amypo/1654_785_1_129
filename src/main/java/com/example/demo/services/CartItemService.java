@@ -1,8 +1,9 @@
-package com.example.demo.services;
+package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
+import com.example.demo.model.CartItem;
+import java.util.List;
 
-@Service
-public class CartItemService {
-    // business logic here
+public interface CartItemService {
+    CartItem addItemToCart(CartItem item);
+    List<CartItem> getItemsForCart(Long cartId);
 }
