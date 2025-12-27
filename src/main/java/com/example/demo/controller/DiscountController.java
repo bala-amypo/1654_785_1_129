@@ -4,7 +4,7 @@ import com.example.demo.model.DiscountApplication;
 import com.example.demo.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -13,6 +13,10 @@ import java.util.List;
 public class DiscountController {
 
     private final DiscountService discountService;
+  public DiscountController(DiscountService discountService){
+  this.discountService=discountService;}
+
+
 
     @PostMapping("/evaluate/{cartId}")
     public ResponseEntity<List<DiscountApplication>> evaluateDiscounts(@PathVariable Long cartId) {
