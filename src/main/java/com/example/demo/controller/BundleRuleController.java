@@ -13,7 +13,7 @@ public class BundleRuleController {
     @Autowired
     private BundleRuleService bundleRuleService;
 
-    @PostMapping("/poat")
+    @PostMapping("/post")
     public ResponseEntity<BundleRule> createRule(@RequestBody BundleRule rule) {
         return ResponseEntity.ok(bundleRuleService.createRule(rule));
     }
