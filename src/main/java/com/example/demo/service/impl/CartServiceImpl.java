@@ -2,31 +2,27 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Cart;
 import com.example.demo.repository.CartRepository;
-import com.example.demo.service.CartService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
-public class CartServiceImpl implements CartService {
-    private CartRepository cartRepository;
+public class CartServiceImpl {
 
-    @Override
+    private final CartRepository repo;
+
+    public CartServiceImpl(CartRepository repo) {
+        this.repo = repo;
+    }
+
     public Cart createCart(Long userId) {
-        Cart cart = new Cart();
-        cart.setUserId(userId);
-        return cartRepository.save(cart);
+        if (repo.findByUserIdAndActiveTrue(userId).isPresent())
+            throw new IllegalArgumentException("Active cart already exists");
+
+        Cart c = new Cart();
+        c.setUserId(userId);
+        return repo.save(c);
     }
 
-    @Override
     public Cart getActiveCartForUser(Long userId) {
-        return cartRepository.findByUserIdAndActiveTrue(userId)
-            .orElseThrow(() -> new EntityNotFoundException("Active cart not found"));
-    }
-
-    @Override
-    public Cart getCartByUserId(Long userId) {
-        Cart cart = new Cart();
-        cart.setUserId(userId);
-        return cartRepository.save(cart);
+        return repo.findByUserIdAndActiveTrue(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Active cart not found"));
     }
 }

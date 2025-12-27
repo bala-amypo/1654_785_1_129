@@ -2,61 +2,63 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
-import com.example.demo.service.DiscountService;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
 
+public class DiscountServiceImpl {
 
-@Service
-public class DiscountServiceImpl implements DiscountService {
-    private DiscountApplicationRepository discountApplicationRepository;
-    private BundleRuleRepository bundleRuleRepository;
-    private CartRepository cartRepository;
-    private CartItemRepository cartItemRepository;
+    private final CartRepository cartRepo;
+    private final CartItemRepository itemRepo;
+    private final BundleRuleRepository ruleRepo;
+    private final DiscountApplicationRepository discountRepo;
+
+    public DiscountServiceImpl(CartRepository c, CartItemRepository i,
+                               BundleRuleRepository r, DiscountApplicationRepository d) {
+        this.cartRepo = c;
+        this.itemRepo = i;
+        this.ruleRepo = r;
+        this.discountRepo = d;
+    }
 
     public List<DiscountApplication> evaluateDiscounts(Long cartId) {
-        Cart cart = cartRepository.findById(cartId).orElse(null);
-        if (cart == null || !cart.getActive()) {
-            return Collections.emptyList();
-        }
 
-        discountApplicationRepository.deleteByCartId(cartId);
-        
-        List<CartItem> cartItems = cartItemRepository.findByCartId(cartId);
-        List<BundleRule> rules = bundleRuleRepository.findByActiveTrue();
-        List<DiscountApplication> applications = new ArrayList<>();
+        Cart cart = cartRepo.findById(cartId).orElseThrow();
+        if (!cart.getActive()) return Collections.emptyList();
 
-        for (BundleRule rule : rules) {
-            Set<Long> requiredIds = Arrays.stream(rule.getRequiredProductIds().split(","))
-                .map(String::trim)
-                .map(Long::valueOf)
+        discountRepo.deleteByCartId(cartId);
+
+        List<CartItem> items = itemRepo.findByCartId(cartId);
+        Set<Long> productIds = items.stream()
+                .map(i -> i.getProduct().getId())
                 .collect(Collectors.toSet());
 
-            Set<Long> cartProductIds = cartItems.stream()
-                .map(item -> item.getProduct().getId())
-                .collect(Collectors.toSet());
+        List<DiscountApplication> result = new ArrayList<>();
 
-            if (cartProductIds.containsAll(requiredIds)) {
-                BigDecimal totalAmount = cartItems.stream()
-                    .filter(item -> requiredIds.contains(item.getProduct().getId()))
-                    .map(item -> item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        for (BundleRule rule : ruleRepo.findByActiveTrue()) {
+            Set<Long> required = Arrays.stream(rule.getRequiredProductIds().split(","))
+                    .map(String::trim).map(Long::valueOf).collect(Collectors.toSet());
 
-                BigDecimal discountAmount = totalAmount.multiply(BigDecimal.valueOf(rule.getDiscountPercentage() / 100));
+            if (productIds.containsAll(required)) {
+                BigDecimal total = items.stream()
+                        .map(i -> i.getProduct().getPrice()
+                                .multiply(BigDecimal.valueOf(i.getQuantity())))
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                BigDecimal discount = total.multiply(
+                        BigDecimal.valueOf(rule.getDiscountPercentage() / 100));
 
                 DiscountApplication app = new DiscountApplication();
                 app.setCart(cart);
                 app.setBundleRule(rule);
-                app.setDiscountAmount(discountAmount);
+                app.setDiscountAmount(discount);
                 app.setAppliedAt(LocalDateTime.now());
-                
-                applications.add(discountApplicationRepository.save(app));
+
+                result.add(discountRepo.save(app));
             }
         }
-
-        return applications;
+        return result;
     }
 }
