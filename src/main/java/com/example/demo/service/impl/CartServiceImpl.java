@@ -4,8 +4,9 @@ import com.example.demo.model.Cart;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.service.CartService;
 import jakarta.persistence.EntityNotFoundException;
-
+import org.springframework.beans.factory.annotation.Autowired;
 public class CartServiceImpl implements CartService {
+    @Autowired
     private CartRepository cartRepository;
 
     public Cart createCart(Long userId) {
