@@ -12,8 +12,7 @@ import java.util.List;
 @RequestMapping("/api/discounts")
 public class DiscountController {
 
-    @Autowired
-    private DiscountService discountService;
+    private final DiscountService discountService;
 
     @PostMapping("/evaluate/{cartId}")
     public ResponseEntity<List<DiscountApplication>> evaluateDiscounts(@PathVariable Long cartId) {
