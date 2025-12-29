@@ -28,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProduct(Long id, Product product) {
         Product existing = getProductById(id);
         existing.setName(product.getName());
-        existing.setCategory(product.getCategory());
         existing.setPrice(product.getPrice());
         return productRepository.save(existing);
     }
