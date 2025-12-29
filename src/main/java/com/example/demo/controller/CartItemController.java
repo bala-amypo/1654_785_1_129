@@ -13,8 +13,5 @@ public class CartItemController {
         this.cartItemService = cartItemService;
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return cartItemService.test();
-    }
+
 }
