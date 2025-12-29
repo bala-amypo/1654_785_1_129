@@ -12,7 +12,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    // ✅ Constructor Injection
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -23,6 +22,15 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("SKU already exists");
         }
         return productRepository.save(product);
+    }
+
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        Product existing = getProductById(id);
+        existing.setName(product.getName());
+        existing.setCategory(product.getCategory());
+        existing.setPrice(product.getPrice());
+        return productRepository.save(existing);
     }
 
     @Override
