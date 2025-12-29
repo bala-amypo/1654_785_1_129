@@ -5,7 +5,7 @@ import com.example.demo.repository.BundleRuleRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BundleRuleServiceImpl {
+public class BundleRuleServiceImpl implements BundleRuleServiceImpl {
 
     private final BundleRuleRepository repo;
 
