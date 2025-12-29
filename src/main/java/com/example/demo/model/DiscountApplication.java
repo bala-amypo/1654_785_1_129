@@ -1,30 +1,24 @@
-package com.example.demo.model;
+package com.example.demo.exception;
 
-public class DiscountApplication {
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-    private String discountName;
-    private double amount;
+@RestControllerAdvice
+public class GlobalExceptionHandler {
 
-    public DiscountApplication() {}
-
-    public DiscountApplication(String discountName, double amount) {
-        this.discountName = discountName;
-        this.amount = amount;
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
     }
 
-    public String getDiscountName() {
-        return discountName;
-    }
-
-    public void setDiscountName(String discountName) {
-        this.discountName = discountName;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
     }
 }
