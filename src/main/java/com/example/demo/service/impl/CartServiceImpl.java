@@ -18,13 +18,10 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart getActiveCartForUser(Long userId) {
-        return cartRepository.findByUserId(userId)
-                .orElseGet(() -> {
-                    Cart cart = new Cart();
-                    cart.setUserId(userId);
-                    cart.setCreatedAt(LocalDateTime.now());
-                    cart.setUpdatedAt(LocalDateTime.now());
-                    return cartRepository.save(cart);
-                });
+        Cart cart = cartRepository.findByUserId(userId).orElse(new Cart());
+        cart.setUserId(userId);
+        cart.setCreatedAt(LocalDateTime.now());
+        cart.setUpdatedAt(LocalDateTime.now());
+        return cartRepository.save(cart);
     }
 }

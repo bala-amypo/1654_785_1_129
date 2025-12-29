@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Cart;
 import com.example.demo.service.CartService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +15,7 @@ public class CartController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Cart> getCart(@PathVariable Long userId) {
-        return ResponseEntity.ok(service.getActiveCartForUser(userId));
+    public Cart getCart(@PathVariable Long userId) {
+        return service.getActiveCartForUser(userId);
     }
 }

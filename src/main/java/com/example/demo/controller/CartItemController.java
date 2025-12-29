@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.CartItem;
 import com.example.demo.service.CartItemService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +17,12 @@ public class CartItemController {
     }
 
     @PostMapping
-    public ResponseEntity<CartItem> addItem(@RequestBody CartItem item) {
-        return ResponseEntity.ok(service.addItemToCart(item));
+    public CartItem addItem(@RequestBody CartItem item) {
+        return service.addItemToCart(item);
     }
 
     @GetMapping("/{cartId}")
-    public ResponseEntity<List<CartItem>> getItems(@PathVariable Long cartId) {
-        return ResponseEntity.ok(service.getItemsForCart(cartId));
+    public List<CartItem> getItems(@PathVariable Long cartId) {
+        return service.getItemsForCart(cartId);
     }
 }
