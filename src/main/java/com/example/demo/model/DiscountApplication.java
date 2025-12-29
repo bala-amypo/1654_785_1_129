@@ -1,24 +1,45 @@
-package com.example.demo.exception;
+package com.example.demo.model;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import jakarta.persistence.*;
 
-@RestControllerAdvice
-public class GlobalExceptionHandler {
+@Entity
+public class DiscountApplication {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(ex.getMessage());
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long orderId;
+    private Double discountAmount;
+
+    public DiscountApplication() {}
+
+    public DiscountApplication(Long orderId, Double discountAmount) {
+        this.orderId = orderId;
+        this.discountAmount = discountAmount;
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
+    public Long getId() {
+        return id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public Double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setDiscountAmount(Double discountAmount) {
+        this.discountAmount = discountAmount;
     }
 }
