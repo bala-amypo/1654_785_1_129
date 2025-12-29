@@ -3,13 +3,13 @@ package com.example.demo.model;
 public class DiscountApplication {
 
     private String discountName;
-    private double discountAmount;
+    private double amount;
 
     public DiscountApplication() {}
 
-    public DiscountApplication(String discountName, double discountAmount) {
+    public DiscountApplication(String discountName, double amount) {
         this.discountName = discountName;
-        this.discountAmount = discountAmount;
+        this.amount = amount;
     }
 
     public String getDiscountName() {
@@ -20,11 +20,11 @@ public class DiscountApplication {
         this.discountName = discountName;
     }
 
-    public double getDiscountAmount() {
-        return discountAmount;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setDiscountAmount(double discountAmount) {
-        this.discountAmount = discountAmount;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 }
