@@ -12,8 +12,8 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public List<DiscountApplication> getApplicationsForCart(Long cartId) {
-        List<DiscountApplication> discounts = new ArrayList<>();
-        discounts.add(new DiscountApplication("NEWUSER", 100.0));
-        return discounts;
+        List<DiscountApplication> list = new ArrayList<DiscountApplication>();
+        list.add(new DiscountApplication("WELCOME", 50.0));
+        return list;
     }
 }
