@@ -5,6 +5,8 @@ import com.example.demo.repository.CartRepository;
 import com.example.demo.service.CartService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -15,30 +17,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart createCart(Long userId) {
-        if (cartRepository.findByUserId(userId).isPresent()) {
-            throw new IllegalArgumentException("Cart already exists");
-        }
-
-        Cart cart = new Cart();
-        cart.setUserId(userId);
-        return cartRepository.save(cart);
-    }
-
-    @Override
-    public Cart getCartById(Long id) {
-        return cartRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
-    }
-
-    @Override
     public Cart getActiveCartForUser(Long userId) {
         return cartRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("not found"));
-    }
-
-    @Override
-    public void deactivateCart(Long id) {
-        cartRepository.deleteById(id);
+                .orElseGet(() -> {
+                    Cart cart = new Cart();
+                    cart.setUserId(userId);
+                    cart.setCreatedAt(LocalDateTime.now());
+                    cart.setUpdatedAt(LocalDateTime.now());
+                    return cartRepository.save(cart);
+                });
     }
 }

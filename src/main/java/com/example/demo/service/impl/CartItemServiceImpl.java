@@ -10,40 +10,19 @@ import java.util.List;
 @Service
 public class CartItemServiceImpl implements CartItemService {
 
-    private final CartItemRepository cartItemRepository;
+    private final CartItemRepository repository;
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository) {
-        this.cartItemRepository = cartItemRepository;
+    public CartItemServiceImpl(CartItemRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public CartItem addItemToCart(CartItem cartItem) {
-        if (cartItem.getQuantity() <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
-        }
-        return cartItemRepository.save(cartItem);
-    }
-
-    @Override
-    public CartItem updateItem(Long id, Integer quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
-        }
-
-        CartItem item = cartItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
-
-        item.setQuantity(quantity);
-        return cartItemRepository.save(item);
+    public CartItem addItemToCart(CartItem item) {
+        return repository.save(item);
     }
 
     @Override
     public List<CartItem> getItemsForCart(Long cartId) {
-        return cartItemRepository.findByCartId(cartId);
-    }
-
-    @Override
-    public void removeItem(Long id) {
-        cartItemRepository.deleteById(id);
+        return repository.findByCartId(cartId);
     }
 }
