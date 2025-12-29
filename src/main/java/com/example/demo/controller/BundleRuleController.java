@@ -2,19 +2,22 @@ package com.example.demo.controller;
 
 import com.example.demo.model.BundleRule;
 import com.example.demo.service.BundleRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/bundle-rules")
+@RequestMapping("/bundle-rules")
 public class BundleRuleController {
 
-    @Autowired
-    private BundleRuleService bundleRuleService;
+    private final BundleRuleService bundleRuleService;
 
-    @PostMapping("/post")
-    public ResponseEntity<BundleRule> createRule(@RequestBody BundleRule rule) {
-        return ResponseEntity.ok(bundleRuleService.createRule(rule));
+    public BundleRuleController(BundleRuleService bundleRuleService) {
+        this.bundleRuleService = bundleRuleService;
+    }
+
+    @PostMapping
+    public ResponseEntity<BundleRule> create(@RequestBody BundleRule rule) {
+        BundleRule saved = bundleRuleService.createBundleRule(rule);
+        return ResponseEntity.ok(saved);
     }
 }

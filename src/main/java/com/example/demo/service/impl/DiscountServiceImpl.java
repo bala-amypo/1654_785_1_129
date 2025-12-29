@@ -11,13 +11,12 @@ import java.util.List;
 public class DiscountServiceImpl implements DiscountService {
 
     @Override
-    public List<DiscountApplication> evaluateDiscounts(Long orderId) {
+    public List<DiscountApplication> getApplicationsForCart(Long cartId) {
 
-        List<DiscountApplication> list = new ArrayList<>();
+        List<DiscountApplication> applications = new ArrayList<>();
 
-        // ✅ orderId is Long (CORRECT)
-        list.add(new DiscountApplication(orderId, 50.0));
+        applications.add(new DiscountApplication(cartId, 100.0));
 
-        return list;
+        return applications;
     }
 }
