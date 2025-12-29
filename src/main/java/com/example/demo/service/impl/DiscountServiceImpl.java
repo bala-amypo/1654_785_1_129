@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import com.example.demo.
 @Service
-public class DiscountServiceImpl {
+public class DiscountServiceImpl implements DiscountService{
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
