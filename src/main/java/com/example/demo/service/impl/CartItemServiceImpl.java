@@ -3,10 +3,10 @@ package com.example.demo.service.impl;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import jakarta.persistence.EntityNotFoundException;
-
+import com.example.demo.service.CartItemService;
 import java.util.List;
 
-public class CartItemServiceImpl {
+public class CartItemServiceImpl implements CartItemService {
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;

@@ -3,10 +3,10 @@ package com.example.demo.service.impl;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-
+import com.example.demo.service.ProductService;
 import java.math.BigDecimal;
 
-public class ProductServiceImpl {
+public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
