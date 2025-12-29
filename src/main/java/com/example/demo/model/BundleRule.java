@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class BundleRule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String ruleName;
@@ -14,7 +14,6 @@ public class BundleRule {
     private Double discountPercentage;
     private Boolean active = true;
 
-    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -30,4 +29,3 @@ public class BundleRule {
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
 }
-           

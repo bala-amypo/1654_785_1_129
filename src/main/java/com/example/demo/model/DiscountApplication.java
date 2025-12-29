@@ -1,45 +1,37 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 public class DiscountApplication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    private Long orderId;
-    private Double discountAmount;
+    @ManyToOne
+    private Cart cart;
 
-    public DiscountApplication() {}
+    @ManyToOne
+    private BundleRule bundleRule;
 
-    public DiscountApplication(Long orderId, Double discountAmount) {
-        this.orderId = orderId;
-        this.discountAmount = discountAmount;
-    }
+    private BigDecimal discountAmount;
+    private LocalDateTime appliedAt;
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getOrderId() {
-        return orderId;
-    }
+    public Cart getCart() { return cart; }
+    public void setCart(Cart cart) { this.cart = cart; }
 
-    public Double getDiscountAmount() {
-        return discountAmount;
-    }
+    public BundleRule getBundleRule() { return bundleRule; }
+    public void setBundleRule(BundleRule bundleRule) { this.bundleRule = bundleRule; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public BigDecimal getDiscountAmount() { return discountAmount; }
+    public void setDiscountAmount(BigDecimal discountAmount) { this.discountAmount = discountAmount; }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setDiscountAmount(Double discountAmount) {
-        this.discountAmount = discountAmount;
-    }
+    public LocalDateTime getAppliedAt() { return appliedAt; }
+    public void setAppliedAt(LocalDateTime appliedAt) { this.appliedAt = appliedAt; }
 }
