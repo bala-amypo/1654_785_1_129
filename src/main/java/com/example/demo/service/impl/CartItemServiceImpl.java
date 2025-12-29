@@ -1,40 +1,60 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
+import com.example.demo.model.Cart;
+import com.example.demo.model.CartItem;
+import com.example.demo.model.Product;
+import com.example.demo.repository.CartItemRepository;
+import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.ProductRepository;
+import com.example.demo.service.CartItemService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
-public class CartItemServiceImpl {
+public class CartItemServiceImpl implements CartItemService {
 
-    private final CartRepository cartRepo;
-    private final ProductRepository productRepo;
-    private final CartItemRepository cartItemRepo;
+    private final CartItemRepository cartItemRepository;
+    private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
 
-    public CartItemServiceImpl(CartRepository c, ProductRepository p, CartItemRepository ci) {
-        this.cartRepo = c;
-        this.productRepo = p;
-        this.cartItemRepo = ci;
+    // ✅ Constructor Injection (MANDATORY)
+    public CartItemServiceImpl(
+            CartItemRepository cartItemRepository,
+            CartRepository cartRepository,
+            ProductRepository productRepository) {
+        this.cartItemRepository = cartItemRepository;
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
     }
 
-    public CartItem addItemToCart(CartItem item) {
-
-        Cart cart = cartRepo.findById(item.getCart().getId()).orElseThrow();
-        if (!cart.getActive())
-            throw new IllegalArgumentException("Only active carts allowed");
-
-        if (item.getQuantity() <= 0)
+    @Override
+    public CartItem addItem(Long cartId, Long productId, Integer quantity) {
+        if (quantity == null || quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
+        }
 
-        Product product = productRepo.findById(item.getProduct().getId()).orElseThrow();
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("not found"));
 
-        return cartItemRepo.findByCartIdAndProductId(cart.getId(), product.getId())
-                .map(existing -> {
-                    existing.setQuantity(existing.getQuantity() + item.getQuantity());
-                    return cartItemRepo.save(existing);
-                })
-                .orElseGet(() -> cartItemRepo.save(item));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("not found"));
+
+        CartItem item = new CartItem();
+        item.setCart(cart);
+        item.setProduct(product);
+        item.setQuantity(quantity);
+
+        return cartItemRepository.save(item);
     }
 
-    public java.util.List<CartItem> getItemsForCart(Long cartId) {
-        return cartItemRepo.findByCartId(cartId);
+    @Override
+    public List<CartItem> getItemsForCart(Long cartId) {
+        return cartItemRepository.findByCartId(cartId);
+    }
+
+    @Override
+    public void removeItem(Long id) {
+        cartItemRepository.deleteById(id);
     }
 }

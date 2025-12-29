@@ -2,27 +2,50 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Cart;
 import com.example.demo.repository.CartRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.demo.service.CartService;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
 @Service
-public class CartServiceImpl {
+public class CartServiceImpl implements CartService {
 
-    private final CartRepository repo;
+    private final CartRepository cartRepository;
 
-    public CartServiceImpl(CartRepository repo) {
-        this.repo = repo;
+    // ✅ Constructor Injection
+    public CartServiceImpl(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
     }
 
+    @Override
     public Cart createCart(Long userId) {
-        if (repo.findByUserIdAndActiveTrue(userId).isPresent())
-            throw new IllegalArgumentException("Active cart already exists");
+        if (cartRepository.findByUserId(userId).isPresent()) {
+            throw new IllegalArgumentException("Cart already exists");
+        }
 
-        Cart c = new Cart();
-        c.setUserId(userId);
-        return repo.save(c);
+        Cart cart = new Cart();
+        cart.setUserId(userId);
+        cart.setCreatedAt(LocalDateTime.now());
+        cart.setUpdatedAt(LocalDateTime.now());
+
+        return cartRepository.save(cart);
     }
 
-    public Cart getActiveCartForUser(Long userId) {
-        return repo.findByUserIdAndActiveTrue(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Active cart not found"));
+    @Override
+    public Cart getCartById(Long id) {
+        return cartRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+    }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("not found"));
+    }
+
+    @Override
+    public void deactivateCart(Long id) {
+        Cart cart = getCartById(id);
+        cartRepository.delete(cart);
     }
 }
