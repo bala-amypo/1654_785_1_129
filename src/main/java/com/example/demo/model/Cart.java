@@ -1,8 +1,14 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
 
     @Id
@@ -10,15 +16,7 @@ public class Cart {
     private Long id;
 
     private Long userId;
-    private Boolean active = true;
 
-    // getters & setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
