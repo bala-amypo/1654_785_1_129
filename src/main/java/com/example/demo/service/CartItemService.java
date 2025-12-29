@@ -3,7 +3,7 @@ package com.example.demo.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CartItemService {
+public interface CartItemService {
 
 
     public String test() {

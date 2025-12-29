@@ -25,7 +25,7 @@ public class DiscountServiceImpl implements DiscountService{
         this.discountApplicationRepository = discountApplicationRepository;
     }
 
-    public List<DiscountApplication> evaluateDiscounts(Long cartId) {
+    public List<DiscountApplication> getApplicationsForCart(Long cartId) {
 
         Cart cart = cartRepository.findById(cartId).orElse(null);
         if (cart == null || !cart.getActive())
