@@ -5,7 +5,8 @@ import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import com.example.demo.service.ProductService;
 import java.math.BigDecimal;
-
+import org.springframework.stereotype.Service;
+@Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;

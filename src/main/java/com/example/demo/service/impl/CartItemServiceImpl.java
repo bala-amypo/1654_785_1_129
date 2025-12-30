@@ -5,6 +5,8 @@ import com.example.demo.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import com.example.demo.service.CartItemService;
 import java.util.List;
+import org.springframework.stereotype.Service;
+@Service
 
 public class CartItemServiceImpl implements CartItemService {
 

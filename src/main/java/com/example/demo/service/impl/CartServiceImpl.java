@@ -6,7 +6,7 @@ import com.example.demo.service.CartService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service   // ✅ THIS IS MANDATORY
+@Service   
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
