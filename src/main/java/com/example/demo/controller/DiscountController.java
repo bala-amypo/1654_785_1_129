@@ -1,3 +1,31 @@
+// package com.example.demo.controller;
+
+// import com.example.demo.model.DiscountApplication;
+// import com.example.demo.service.DiscountService;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.*;
+
+// import java.util.List;
+
+// @RestController
+// @RequestMapping("/api/discounts")
+// public class DiscountController {
+
+//     private final DiscountService discountService;
+
+//     public DiscountController(DiscountService discountService) {
+//         this.discountService = discountService;
+//     }
+
+//     @GetMapping("/{cartId}")
+//     public ResponseEntity<List<DiscountApplication>> getDiscounts(
+//             @PathVariable Long cartId) {
+
+//         return ResponseEntity.ok(
+//                 discountService.getApplicationsForCart(cartId)
+//         );
+//     }
+// }
 package com.example.demo.controller;
 
 import com.example.demo.model.DiscountApplication;
@@ -17,8 +45,35 @@ public class DiscountController {
         this.discountService = discountService;
     }
 
-    @GetMapping("/{cartId}")
-    public ResponseEntity<List<DiscountApplication>> getDiscounts(
+    /**
+     * Evaluate discounts for a cart
+     */
+    @PostMapping("/evaluate/{cartId}")
+    public ResponseEntity<List<DiscountApplication>> evaluateDiscounts(
+            @PathVariable Long cartId) {
+
+        return ResponseEntity.ok(
+                discountService.evaluateDiscounts(cartId)
+        );
+    }
+
+    /**
+     * Get discount application by id
+     */
+    @GetMapping("/application/{id}")
+    public ResponseEntity<DiscountApplication> getApplicationById(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                discountService.getApplicationById(id)
+        );
+    }
+
+    /**
+     * Get all discount applications for a cart
+     */
+    @GetMapping("/cart/{cartId}")
+    public ResponseEntity<List<DiscountApplication>> getApplicationsForCart(
             @PathVariable Long cartId) {
 
         return ResponseEntity.ok(
