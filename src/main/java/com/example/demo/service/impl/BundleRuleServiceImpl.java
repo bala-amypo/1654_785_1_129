@@ -9,7 +9,7 @@ import com.example.demo.service.BundleRuleService;
 public class BundleRuleServiceImpl implements BundleRuleService {
 
     @Override
-    public BundleRule createBundleRule(BundleRule rule) {
+    public BundleRule createRule(BundleRule rule) {
         return rule;
     }
 }

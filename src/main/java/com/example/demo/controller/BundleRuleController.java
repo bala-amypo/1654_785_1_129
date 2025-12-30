@@ -17,7 +17,7 @@ public class BundleRuleController {
 
     @PostMapping
     public ResponseEntity<BundleRule> create(@RequestBody BundleRule rule) {
-        BundleRule saved = bundleRuleService.createBundleRule(rule);
+        BundleRule saved = bundleRuleService.createRule(rule);
         return ResponseEntity.ok(saved);
     }
 }
